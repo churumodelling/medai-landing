@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedAI — Внедрение ИИ в клиники</title>
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-dark: #0d0d14;
+      --bg-section: #13131f;
+      --bg-card: #1a1a2e;
+      --purple-deep: #6b21a8;
+      --purple-mid: #7c3aed;
+      --purple-light: #a78bfa;
+      --purple-glow: #c4b5fd;
+      --text-primary: #f0eef6;
+      --text-secondary: #a0a0b8;
+      --radius: 16px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-dark);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 18px 0;
+      background: rgba(13, 13, 20, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(124, 58, 237, 0.12);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--purple-mid);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.25s;
+    }
+
+    nav a:hover {
+      color: var(--purple-light);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(107, 33, 168, 0.30) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 70%, rgba(124, 58, 237, 0.15) 0%, transparent 60%),
+        var(--bg-dark);
+    }
+
+    .hero-content {
+      max-width: 640px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--purple-light);
+      background: rgba(124, 58, 237, 0.12);
+      border: 1px solid rgba(124, 58, 237, 0.25);
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--text-primary) 40%, var(--purple-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      border-radius: 100px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple-mid) 100%);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 4px 24px rgba(124, 58, 237, 0.3);
+    }
+
+    .hero-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(124, 58, 237, 0.45);
+    }
+
+    .hero-cta svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.2s;
+    }
+
+    .hero-cta:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* ─── ABOUT ─── */
+    .about {
+      padding: 100px 0;
+      background:
+        radial-gradient(ellipse 50% 40% at 20% 50%, rgba(107, 33, 168, 0.08) 0%, transparent 70%),
+        var(--bg-dark);
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--purple-mid);
+      margin-bottom: 16px;
+    }
+
+    .about h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 40px;
+    }
+
+    .about-copy {
+      max-width: 760px;
+      padding: 32px;
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      border: 1px solid rgba(124, 58, 237, 0.1);
+    }
+
+    .about-copy p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    .about-copy p + p {
+      margin-top: 16px;
+    }
+
+    /* ─── CONTACTS ─── */
+    .contacts {
+      padding: 100px 0 120px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 50% 50% at 50% 100%, rgba(107, 33, 168, 0.15) 0%, transparent 70%),
+        var(--bg-dark);
+    }
+
+    .contacts h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .contacts > .container > p {
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+      font-size: 1.05rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      border: 1px solid rgba(124, 58, 237, 0.15);
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+      min-width: 280px;
+      justify-content: center;
+    }
+
+    .contact-link:hover {
+      border-color: var(--purple-mid);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.2);
+    }
+
+    .contact-link svg {
+      width: 22px;
+      height: 22px;
+      color: var(--purple-light);
+      flex-shrink: 0;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 32px 0;
+      text-align: center;
+      border-top: 1px solid rgba(124, 58, 237, 0.1);
+    }
+
+    footer p {
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+    }
+
+    /* ─── MEDIA QUERIES ─── */
+    @media (min-width: 768px) {
+      .contact-links {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 600px) {
+      nav ul {
+        gap: 16px;
+      }
+
+      nav a {
+        font-size: 0.82rem;
+      }
+
+      .hero {
+        padding: 100px 20px 60px;
+      }
+
+      .about, .contacts {
+        padding: 60px 0;
+      }
+
+      .about-copy {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">Med<span>AI</span></a>
+      <ul>
+        <li><a href="#about">О нас</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header>
+    <!-- HERO -->
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <div class="hero-badge">Искусственный интеллект в медицине</div>
+        <h1>Внедряем ИИ в&nbsp;клиники. Точнее. Быстрее. Умнее.</h1>
+        <p>Помогаем медицинским учреждениям автоматизировать диагностику, аналитику и&nbsp;рабочие процессы с&nbsp;помощью современных технологий машинного обучения.</p>
+        <a href="#contacts" class="hero-cta">
+          Связаться с нами
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        </a>
+      </div>
+    </section>
+  </header>
+
+  <main>
+    <!-- ABOUT -->
+    <section class="about" id="about">
+      <div class="container">
+        <span class="section-label">О компании</span>
+        <h2>Технологии, которые меняют медицину</h2>
+
+        <div class="about-copy">
+          <p>Мы внедряем ИИ-решения в частные и сетевые клиники: от поддержки диагностики до автоматизации маршрутизации пациентов. Наша команда помогает интегрировать модели в существующие медицинские системы без остановки работы учреждения.</p>
+          <p>Используем машинное обучение и клиническую аналитику, чтобы ускорить обработку исследований, снизить долю рутинных операций и повысить точность принятия решений. Для руководителей формируем понятные метрики эффективности и прогнозы нагрузки по отделениям.</p>
+          <p>Работаем поэтапно: аудит процессов, пилот, обучение персонала и масштабирование. Такой подход снижает риски внедрения и дает измеримый результат уже на ранних этапах проекта.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section class="contacts" id="contacts">
+      <div class="container">
+        <span class="section-label">Контакты</span>
+        <h2>Давайте обсудим ваш проект</h2>
+        <p>Свяжитесь с нами любым удобным способом — ответим в течение дня.</p>
+
+        <div class="contact-links">
+          <a href="mailto:hello@medai.ru" class="contact-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+            hello@medai.ru
+          </a>
+          <a href="https://t.me/medai" target="_blank" rel="noopener" class="contact-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0h-.056Zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635Z"/></svg>
+            Telegram
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 MedAI. Все права защищены.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

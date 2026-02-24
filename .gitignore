@@ -1,0 +1,44 @@
+# ─── Секреты и переменные окружения ───
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials/
+*.credentials
+
+# ─── Локальные конфиги с данными ───
+config.local.*
+*.local.*
+
+# ─── Зависимости и сборки ───
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+dist/
+build/
+.next/
+.nuxt/
+
+# ─── Артефакты и архивы (могут содержать лишнее) ───
+*.zip
+*.tar.gz
+*.log
+
+# ─── Система и IDE ───
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ─── Временные и кэш ───
+.cache/
+tmp/
+temp/
+*.tmp
