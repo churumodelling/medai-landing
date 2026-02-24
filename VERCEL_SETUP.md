@@ -12,3 +12,15 @@
 После этого любой `git push origin master` будет запускать новый деплой.
 
 Текущий прод: **https://medai-landing-pink.vercel.app**
+
+---
+
+## Чат-бот (AI консультант)
+
+На сайте подключён виджет чат-бота ([cursor-ai-chatbot](https://github.com/evgyur/cursor-ai-chatbot)). Чтобы он отвечал:
+
+1. Получи API-ключ: [platform.minimax.io](https://platform.minimax.io)  
+2. В Vercel: **Settings** → **Environment Variables** → добавь переменную **MINIMAX_API_KEY** (значение — твой ключ).  
+3. Сохрани и сделай **Redeploy** последнего деплоя (или новый push).
+
+Без `MINIMAX_API_KEY` виджет откроется, но на сообщения будет отвечать ошибкой.
